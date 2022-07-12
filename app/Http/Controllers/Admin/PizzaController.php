@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Pizza;
+use App\Ingredient;
 use App\Http\Requests\PizzaRequest;
 
 class PizzaController extends Controller
@@ -27,7 +28,8 @@ class PizzaController extends Controller
      */
     public function create()
     {
-        return view('admin.pizze.create');
+        $ingredients = Ingredient::all();
+        return view('admin.pizze.create', compact('ingredients'));
     }
 
     /**
@@ -44,6 +46,10 @@ class PizzaController extends Controller
         // dd($data['vegetariano']);
         $new_pizza->fill($data);
         $new_pizza->save();
+
+        if(array_key_exists('ingredients', $data)){
+            $new_pizza->ingredients()->attach($data['ingredients']);
+        }
 
         return redirect()->route('admin.pizza.show', $new_pizza);
     }
@@ -73,9 +79,9 @@ class PizzaController extends Controller
     public function edit($id)
     {
         $pizza = Pizza::find($id);
+        $ingredients = Ingredient::all();
         if ($pizza) {
-
-            return view('admin.pizze.edit', compact('pizza'));
+            return view('admin.pizze.edit', compact('pizza','ingredients'));
         }
         abort(404, 'Pizza non trovata');
     }

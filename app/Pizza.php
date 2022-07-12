@@ -28,4 +28,8 @@ class Pizza extends Model
         'vegetariano',
         'slug',
     ];
+
+    public function ingredients(){
+        return $this->belongsToMany('App\Ingredient');
+    }
 }

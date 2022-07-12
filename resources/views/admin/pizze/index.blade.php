@@ -8,6 +8,7 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
+                <th scope="col">Ingredients</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -16,6 +17,15 @@
                     <tr>
                         <th scope="row">{{$pizza->id}}</th>
                         <td>{{$pizza->nome}}</td>
+                        <td>
+                            @forelse ($pizza->ingredients as $ingridient)
+
+                            <span>{{$ingridient->name}} | </span>
+                            @empty
+
+                            <span>-</span>
+                            @endforelse
+                        </td>
                         <td>
                             {{-- <a class="btn btn-success" href="{{ route('admin.posts.show',$post)}}">Show</a> --}}
                             <a class="btn btn-success" href="{{ route('admin.pizza.show',$pizza)}}">Show</a>

@@ -37,15 +37,15 @@
                         <p class="error-msg text-danger"> {{ $message }} </p>
                     @enderror
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="ingredienti" class="form-label">Ingredienti:</label>
                     <input type="text" id="ingredienti" name="ingredienti" value="{{ old('ingredienti') }}"
                         class="form-control @error('ingredienti') is-invalid @enderror " placeholder="Ingredienti pizza">
                     @error('ingredienti')
                         <p class="error-msg text-danger"> {{ $message }} </p>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <div class="mb-3">
                     <h4>Vegetariano:</h4>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="vegetariano" id="vegetariano" value="0">
@@ -58,6 +58,14 @@
                         <label class="form-check-label" for="flexRadioDefault2">
                             Si
                         </label>
+                    </div>
+                    <div class="mb-3">
+                        <h4>Ingredienti:</h4>
+                        @foreach ($ingredients as $ingredient)
+                            <input type="checkbox" name="ingredients[]" id="ingredient{{$loop->iteration}}" value="{{$ingredient->id}}"
+                            @if (in_array($ingredient->id, old('ingredients',[]))) checked @endif>
+                            <label class="mr-3" for="ingredient{{$loop->iteration}}">{{$ingredient->name}}</label>
+                        @endforeach
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Invia</button>
